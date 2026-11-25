@@ -1,0 +1,24 @@
+[package]
+name = "tapeduel"
+version = "0.1.0"
+description = "TapeDuel: 90-second gasless portfolio duels on Solana & MagicBlock Ephemeral Rollups"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "tapeduel"
+
+[features]
+default = []
+cpi = ["no-entrypoint"]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+idl-build = ["anchor-lang/idl-build"]
+anchor-debug = []
+custom-heap = []
+custom-panic = []
+
+[dependencies]
+anchor-lang = { version = "1.2.2", features = ["init-if-needed"] }
+ephemeral-rollups-sdk = { version = "0.20.0", features = ["anchor", "vrf"] }

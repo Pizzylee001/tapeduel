@@ -1,0 +1,19 @@
+[toolchain]
+anchor_version = "1.2.2"
+
+[features]
+resolution = true
+skip-lint = false
+
+[programs.devnet]
+tapeduel = "BdVNbT73iebJ3w396FeWiu3cvcQbe4fG1EZ138d1QpXi"
+
+[programs.localnet]
+tapeduel = "BdVNbT73iebJ3w396FeWiu3cvcQbe4fG1EZ138d1QpXi"
+
+[registry]
+url = "https://api.apr.dev"
+
+[provider]
+cluster = "devnet"
+wallet = "/home/antigravity/.keys/tapeduel-devnet.json"
