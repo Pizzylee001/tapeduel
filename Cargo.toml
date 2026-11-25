@@ -6,6 +6,8 @@ resolver = "2"
 
 [profile.release]
 overflow-checks = true
+opt-level = "z"
+strip = "symbols"
 lto = "fat"
 codegen-units = 1
 
