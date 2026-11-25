@@ -66,11 +66,8 @@
       "accounts": [
         {
           "name": "vrf_program_identity",
-          "docs": [
-            "Scoped VRF identity PDA, bound to this program. Its presence as a signer proves",
-            "the callback was issued by the VRF program for this program."
-          ],
-          "signer": true
+          "signer": true,
+          "address": "7o8m8oDYivGoRqwUykeksFSuTpk7xhvn2szKQyNuU1QN"
         },
         {
           "name": "sprint",

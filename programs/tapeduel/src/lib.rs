@@ -842,9 +842,14 @@ pub struct RequestVrfCards<'info> {
     pub slot_hashes: UncheckedAccount<'info>,
 }
 
+pub const SCOPED_VRF_IDENTITY: Pubkey =
+    Pubkey::new_from_array(mb_vrf::consts::scoped_vrf_identity_const(&ID).0);
+
 #[vrf_callback]
 #[derive(Accounts)]
 pub struct CallbackVrfCards<'info> {
+    #[account(address = SCOPED_VRF_IDENTITY)]
+    pub vrf_program_identity: Signer<'info>,
     #[account(mut)]
     pub sprint: Account<'info, SprintRun>,
 }
