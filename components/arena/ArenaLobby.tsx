@@ -385,10 +385,10 @@ export function ArenaLobby() {
 
         {/* Column Headers */}
         <div className="grid grid-cols-12 gap-2 px-4 py-2 bg-[var(--color-surface-inset)] border border-[var(--color-border-subtle)] text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
-          <div className="col-span-5 sm:col-span-4">Ghost Callsign</div>
+          <div className="col-span-6 sm:col-span-4">Ghost Callsign</div>
           <div className="hidden sm:block sm:col-span-2">Regime</div>
           <div className="col-span-3 sm:col-span-2 text-right">Target</div>
-          <div className="col-span-4 sm:col-span-2 text-right">Stake</div>
+          <div className="col-span-3 sm:col-span-2 text-right">Stake</div>
           <div className="hidden sm:block sm:col-span-2 text-right">Defense W-L</div>
         </div>
 
@@ -427,14 +427,14 @@ export function ArenaLobby() {
                     setSelectedGhostId(ghost.ghostId);
                     setActionError(null);
                   }}
-                  className={`w-full text-left grid grid-cols-12 gap-2 items-center px-4 py-4 transition-colors cursor-pointer ${
+                  className={`w-full text-left grid grid-cols-12 gap-2 items-center px-3.5 sm:px-4 py-4 transition-colors cursor-pointer ${
                     isSelected
                       ? "bg-[var(--color-surface-elevated)] border-l-[3px] border-l-[var(--color-accent-primary)]"
                       : "bg-[var(--color-surface-raised)] hover:bg-[var(--color-surface-elevated)]/70 border-l-[3px] border-l-transparent"
                   }`}
                 >
-                  <div className="col-span-5 sm:col-span-4 flex items-center gap-2.5 min-w-0">
-                    <span className="font-display text-base sm:text-lg text-[var(--color-ink-primary)] truncate">
+                  <div className="col-span-6 sm:col-span-4 flex items-center gap-2 min-w-0">
+                    <span className="font-display text-[14px] sm:text-lg text-[var(--color-ink-primary)] truncate">
                       {ghost.callsign}
                     </span>
                     {isSelected && (
@@ -453,11 +453,11 @@ export function ArenaLobby() {
                     </span>
                   </div>
 
-                  <div className="col-span-3 sm:col-span-2 text-right font-data text-sm sm:text-base font-semibold text-[var(--color-semantic-long)]">
+                  <div className="col-span-3 sm:col-span-2 text-right font-data text-xs sm:text-base font-semibold text-[var(--color-semantic-long)]">
                     {formatBps(ghost.targetReturnBps)}
                   </div>
 
-                  <div className="col-span-4 sm:col-span-2 text-right font-data text-sm sm:text-base font-medium text-[var(--color-ink-primary)]">
+                  <div className="col-span-3 sm:col-span-2 text-right font-data text-xs sm:text-base font-medium text-[var(--color-ink-primary)] whitespace-nowrap">
                     {formatSol(ghost.stakeLamports)} SOL
                   </div>
 

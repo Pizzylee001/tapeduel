@@ -652,10 +652,14 @@ export function ExecutionDesk({ sprintId }: { sprintId: string }) {
             </div>
             <div
               className={`font-data text-lg sm:text-xl font-semibold ${
-                isLeading ? "text-[var(--color-semantic-long)]" : "text-[var(--color-semantic-short)]"
+                spreadBps > 0
+                  ? "text-[var(--color-semantic-long)]"
+                  : spreadBps < 0
+                  ? "text-[var(--color-semantic-short)]"
+                  : "text-[var(--color-ink-secondary)]"
               }`}
             >
-              {formatBps(spreadBps)} {isLeading ? "LEAD" : "TRAIL"}
+              {formatBps(spreadBps)} {spreadBps > 0 ? "LEAD" : spreadBps < 0 ? "TRAIL" : "EVEN"}
             </div>
           </div>
 
@@ -714,6 +718,7 @@ export function ExecutionDesk({ sprintId }: { sprintId: string }) {
       <OscilloscopeChart
         points={curve}
         ghostCallsign={ghost?.callsign ?? "GHOST"}
+        ghostTargetBps={ghost?.targetReturnBps}
         currentSec={elapsedSecs}
         userPnlBps={pnlBps}
         ghostPaceBps={ghostPaceNow}

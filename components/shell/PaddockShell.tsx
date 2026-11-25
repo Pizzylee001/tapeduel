@@ -183,7 +183,7 @@ export function PaddockShell({ children }: { children: React.ReactNode }) {
       <div className="flex-1 md:pl-[84px] flex flex-col min-w-0 pb-20 md:pb-8">
         {/* Recessed Live Pyth Lazer Telemetry Strip */}
         <div className="w-full min-h-[38px] bg-[var(--color-canvas-deep)] border-b border-[var(--color-border-subtle)] px-4 lg:px-8 flex flex-wrap items-center justify-between gap-x-5 gap-y-1.5 py-1.5">
-          <div className="flex items-center gap-4 sm:gap-6 overflow-x-auto">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 sm:gap-x-6">
             <div className="flex items-center gap-1.5 whitespace-nowrap">
               <Broadcast
                 size={14}

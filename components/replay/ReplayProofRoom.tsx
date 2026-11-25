@@ -471,6 +471,7 @@ export function ReplayProofRoom({ tapeId }: { tapeId: string }) {
         <OscilloscopeChart
           points={visibleCurve.length > 0 ? visibleCurve : activeData.curve}
           ghostCallsign={activeData.ghostCallsign}
+          ghostTargetBps={activeData.ghostTargetBps}
           currentSec={scrubSec}
           userPnlBps={scrubbedPoint.userBps}
           ghostPaceBps={scrubbedPoint.ghostBps}

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { formatBps } from "@/lib/solana/practiceData";
+import { formatBps, ghostPaceAtSecond } from "@/lib/solana/practiceData";
 
 export interface CurvePoint {
   sec: number;
@@ -12,6 +12,7 @@ export interface CurvePoint {
 interface OscilloscopeChartProps {
   points: CurvePoint[];
   ghostCallsign: string;
+  ghostTargetBps?: number;
   currentSec: number;
   userPnlBps: number;
   ghostPaceBps: number;
@@ -22,6 +23,7 @@ interface OscilloscopeChartProps {
 export function OscilloscopeChart({
   points,
   ghostCallsign,
+  ghostTargetBps,
   currentSec,
   userPnlBps,
   ghostPaceBps,
@@ -35,7 +37,16 @@ export function OscilloscopeChart({
   const plotW = width - padX * 2;
   const plotH = height - padY * 2;
 
+  const fullGhostPoints =
+    typeof ghostTargetBps === "number"
+      ? Array.from({ length: 31 }, (_, i) => {
+          const sec = i * 3;
+          return { sec, bps: ghostPaceAtSecond(ghostTargetBps, sec) };
+        })
+      : [];
+
   const allValues = points.flatMap((p) => [p.userBps, p.ghostBps]);
+  for (const gp of fullGhostPoints) allValues.push(gp.bps);
   allValues.push(0, 120, -60, userPnlBps, ghostPaceBps);
   const rawMin = Math.min(...allValues);
   const rawMax = Math.max(...allValues);
@@ -55,6 +66,13 @@ export function OscilloscopeChart({
       .map((p, idx) => `${idx === 0 ? "M" : "L"} ${toX(p.sec).toFixed(1)} ${toY(selector(p)).toFixed(1)}`)
       .join(" ");
   };
+
+  const fullGhostPath =
+    fullGhostPoints.length > 0
+      ? fullGhostPoints
+          .map((p, idx) => `${idx === 0 ? "M" : "L"} ${toX(p.sec).toFixed(1)} ${toY(p.bps).toFixed(1)}`)
+          .join(" ")
+      : "";
 
   const userPath = buildPath((p) => p.userBps);
   const ghostPath = buildPath((p) => p.ghostBps);
@@ -172,13 +190,24 @@ export function OscilloscopeChart({
           {/* Subtle Gold Fill Under User Curve */}
           {areaPath && <path d={areaPath} fill="rgba(240, 180, 41, 0.09)" />}
 
-          {/* Ghost Sealed Pace Curve (Dashed Bone) */}
+          {/* Full 90s Ghost Target Pace Projection */}
+          {fullGhostPath && (
+            <path
+              d={fullGhostPath}
+              fill="none"
+              stroke="rgba(182, 201, 192, 0.42)"
+              strokeWidth="1.6"
+              strokeDasharray="6 4"
+            />
+          )}
+
+          {/* Ghost Sealed Pace Curve (Elapsed) */}
           {ghostPath && (
             <path
               d={ghostPath}
               fill="none"
               stroke="#B6C9C0"
-              strokeWidth="1.9"
+              strokeWidth="2.0"
               strokeDasharray="6 4"
             />
           )}
