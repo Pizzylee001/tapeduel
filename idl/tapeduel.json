@@ -1,0 +1,1872 @@
+{
+  "address": "BdVNbT73iebJ3w396FeWiu3cvcQbe4fG1EZ138d1QpXi",
+  "metadata": {
+    "name": "tapeduel",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "TapeDuel: 90-second gasless portfolio duels on Solana & MagicBlock Ephemeral Rollups"
+  },
+  "instructions": [
+    {
+      "name": "activate_card_er",
+      "docs": [
+        "Activates one of the 3 VRF-dealt Tactical Cards inside MagicBlock ER."
+      ],
+      "discriminator": [
+        89,
+        62,
+        57,
+        146,
+        5,
+        225,
+        74,
+        122
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "sprint",
+          "writable": true
+        },
+        {
+          "name": "sol_feed"
+        },
+        {
+          "name": "btc_feed"
+        },
+        {
+          "name": "eth_feed"
+        }
+      ],
+      "args": [
+        {
+          "name": "slot",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "callback_vrf_cards",
+      "docs": [
+        "Invoked exclusively by MagicBlock VRF program identity to deal the 3 Tactical Cards."
+      ],
+      "discriminator": [
+        134,
+        231,
+        196,
+        254,
+        100,
+        238,
+        245,
+        231
+      ],
+      "accounts": [
+        {
+          "name": "vrf_program_identity",
+          "docs": [
+            "Scoped VRF identity PDA, bound to this program. Its presence as a signer proves",
+            "the callback was issued by the VRF program for this program."
+          ],
+          "signer": true
+        },
+        {
+          "name": "sprint",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "randomness",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "claim_bounty",
+      "docs": [
+        "Claims accumulated 10% defense bounties earned by a published Bounty Ghost."
+      ],
+      "discriminator": [
+        225,
+        157,
+        163,
+        238,
+        239,
+        169,
+        75,
+        226
+      ],
+      "accounts": [
+        {
+          "name": "treasury",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  114,
+                  101,
+                  97,
+                  115,
+                  117,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "ghost",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  104,
+                  111,
+                  115,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "ghost.ghost_id",
+                "account": "GhostTape"
+              }
+            ]
+          }
+        },
+        {
+          "name": "creator",
+          "writable": true,
+          "signer": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "create_sprint",
+      "docs": [
+        "Creates a new SprintRun PDA on base layer and locks the player's stake in PlayerVault.",
+        "Pair with `delegate_sprint` in the same L1 transaction for a single-signature duel entry."
+      ],
+      "discriminator": [
+        112,
+        58,
+        167,
+        87,
+        77,
+        201,
+        10,
+        179
+      ],
+      "accounts": [
+        {
+          "name": "arena",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  114,
+                  101,
+                  110,
+                  97
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "player"
+              }
+            ]
+          }
+        },
+        {
+          "name": "ghost",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  104,
+                  111,
+                  115,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "ghost.ghost_id",
+                "account": "GhostTape"
+              }
+            ]
+          }
+        },
+        {
+          "name": "sprint",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  112,
+                  114,
+                  105,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "player"
+              },
+              {
+                "kind": "arg",
+                "path": "sprint_nonce"
+              }
+            ]
+          }
+        },
+        {
+          "name": "player",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "sprint_nonce",
+          "type": "u64"
+        },
+        {
+          "name": "session_key",
+          "type": "pubkey"
+        },
+        {
+          "name": "stake_lamports",
+          "type": "u64"
+        },
+        {
+          "name": "validator",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "delegate_sprint",
+      "docs": [
+        "Delegates the initialized SprintRun PDA to the chosen MagicBlock ER validator."
+      ],
+      "discriminator": [
+        63,
+        162,
+        68,
+        73,
+        65,
+        219,
+        229,
+        250
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "signer": true
+        },
+        {
+          "name": "buffer_pda",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  117,
+                  102,
+                  102,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pda"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                157,
+                237,
+                219,
+                235,
+                144,
+                46,
+                232,
+                47,
+                69,
+                181,
+                27,
+                173,
+                12,
+                162,
+                251,
+                63,
+                90,
+                210,
+                15,
+                39,
+                233,
+                101,
+                104,
+                224,
+                100,
+                77,
+                145,
+                143,
+                67,
+                156,
+                89,
+                105
+              ]
+            }
+          }
+        },
+        {
+          "name": "delegation_record_pda",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  101,
+                  108,
+                  101,
+                  103,
+                  97,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pda"
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "delegation_program"
+            }
+          }
+        },
+        {
+          "name": "delegation_metadata_pda",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  101,
+                  108,
+                  101,
+                  103,
+                  97,
+                  116,
+                  105,
+                  111,
+                  110,
+                  45,
+                  109,
+                  101,
+                  116,
+                  97,
+                  100,
+                  97,
+                  116,
+                  97
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pda"
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "delegation_program"
+            }
+          }
+        },
+        {
+          "name": "pda",
+          "writable": true
+        },
+        {
+          "name": "owner_program",
+          "address": "BdVNbT73iebJ3w396FeWiu3cvcQbe4fG1EZ138d1QpXi"
+        },
+        {
+          "name": "delegation_program",
+          "address": "DELeGGvXpWV2fqJUhqcF5ZSYMS4JTLjteaAMARRSaeSh"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "sprint_nonce",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "deposit",
+      "docs": [
+        "Deposits SOL into the player's L1 escrow PlayerVault PDA."
+      ],
+      "discriminator": [
+        242,
+        35,
+        198,
+        137,
+        82,
+        225,
+        242,
+        182
+      ],
+      "accounts": [
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "player"
+              }
+            ]
+          }
+        },
+        {
+          "name": "player",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount_lamports",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "finalize_payout",
+      "docs": [
+        "Settles escrowed SOL on Solana Devnet L1 after the SprintRun PDA undelegates from ER."
+      ],
+      "discriminator": [
+        80,
+        105,
+        227,
+        22,
+        73,
+        169,
+        249,
+        67
+      ],
+      "accounts": [
+        {
+          "name": "treasury",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  114,
+                  101,
+                  97,
+                  115,
+                  117,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "sprint.player",
+                "account": "SprintRun"
+              }
+            ]
+          }
+        },
+        {
+          "name": "ghost",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  104,
+                  111,
+                  115,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "ghost.ghost_id",
+                "account": "GhostTape"
+              }
+            ]
+          }
+        },
+        {
+          "name": "sprint",
+          "writable": true
+        },
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "fund_treasury",
+      "docs": [
+        "Deposits Devnet SOL into ArenaTreasury so solo winning challengers get paid immediately on-chain."
+      ],
+      "discriminator": [
+        71,
+        154,
+        45,
+        220,
+        206,
+        32,
+        174,
+        239
+      ],
+      "accounts": [
+        {
+          "name": "treasury",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  114,
+                  101,
+                  97,
+                  115,
+                  117,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "funder",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount_lamports",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "init_arena",
+      "docs": [
+        "Initializes the global ArenaConfig and ArenaTreasury PDAs once on Devnet L1."
+      ],
+      "discriminator": [
+        24,
+        246,
+        252,
+        176,
+        155,
+        175,
+        123,
+        124
+      ],
+      "accounts": [
+        {
+          "name": "arena",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  114,
+                  101,
+                  110,
+                  97
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "treasury",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  114,
+                  101,
+                  97,
+                  115,
+                  117,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "process_undelegation",
+      "discriminator": [
+        196,
+        28,
+        41,
+        206,
+        48,
+        37,
+        51,
+        167
+      ],
+      "accounts": [
+        {
+          "name": "base_account",
+          "writable": true
+        },
+        {
+          "name": "buffer",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  110,
+                  100,
+                  101,
+                  108,
+                  101,
+                  103,
+                  97,
+                  116,
+                  101,
+                  45,
+                  98,
+                  117,
+                  102,
+                  102,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "base_account"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                181,
+                183,
+                0,
+                225,
+                242,
+                87,
+                58,
+                192,
+                204,
+                6,
+                34,
+                1,
+                52,
+                74,
+                207,
+                151,
+                184,
+                53,
+                6,
+                235,
+                140,
+                229,
+                25,
+                152,
+                204,
+                98,
+                126,
+                24,
+                147,
+                128,
+                167,
+                62
+              ]
+            }
+          }
+        },
+        {
+          "name": "payer",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "account_seeds",
+          "type": {
+            "vec": "bytes"
+          }
+        }
+      ]
+    },
+    {
+      "name": "publish_ghost",
+      "docs": [
+        "Publishes a finalized winning SprintRun as an immutable on-chain Bounty Ghost."
+      ],
+      "discriminator": [
+        68,
+        100,
+        209,
+        236,
+        165,
+        155,
+        44,
+        173
+      ],
+      "accounts": [
+        {
+          "name": "arena",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  114,
+                  101,
+                  110,
+                  97
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "sprint",
+          "writable": true
+        },
+        {
+          "name": "ghost",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  104,
+                  111,
+                  115,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "ghost_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "creator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "ghost_id",
+          "type": "u64"
+        },
+        {
+          "name": "callsign",
+          "type": "string"
+        },
+        {
+          "name": "regime",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "rebalance_er",
+      "docs": [
+        "Gasless sub-50ms rebalance inside MagicBlock ER signed by the ephemeral session key."
+      ],
+      "discriminator": [
+        100,
+        130,
+        191,
+        26,
+        186,
+        188,
+        4,
+        82
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "sprint",
+          "writable": true
+        },
+        {
+          "name": "sol_feed"
+        },
+        {
+          "name": "btc_feed"
+        },
+        {
+          "name": "eth_feed"
+        }
+      ],
+      "args": [
+        {
+          "name": "new_weights",
+          "type": {
+            "array": [
+              "i8",
+              3
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "request_vrf_cards",
+      "docs": [
+        "Requests verifiable randomness from MagicBlock VRF (works on Devnet L1 or inside ER)."
+      ],
+      "discriminator": [
+        157,
+        214,
+        43,
+        104,
+        63,
+        207,
+        46,
+        186
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "sprint",
+          "writable": true
+        },
+        {
+          "name": "oracle_queue",
+          "writable": true
+        },
+        {
+          "name": "slot_hashes"
+        },
+        {
+          "name": "program_identity",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  105,
+                  100,
+                  101,
+                  110,
+                  116,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "vrf_program",
+          "address": "Vrf1RNUjXmQGjmQrQLvJHs9SNkvDJEsRVFPkfSQUwGz"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "client_seed",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "seed_ghost",
+      "docs": [
+        "Seeds an initial Bounty Ghost on Devnet (arena authority only) from a verified real tape."
+      ],
+      "discriminator": [
+        179,
+        57,
+        172,
+        42,
+        249,
+        220,
+        79,
+        105
+      ],
+      "accounts": [
+        {
+          "name": "arena",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  114,
+                  101,
+                  110,
+                  97
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "ghost",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  104,
+                  111,
+                  115,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "ghost_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "ghost_id",
+          "type": "u64"
+        },
+        {
+          "name": "callsign",
+          "type": "string"
+        },
+        {
+          "name": "stake_lamports",
+          "type": "u64"
+        },
+        {
+          "name": "target_return_bps",
+          "type": "i32"
+        },
+        {
+          "name": "regime",
+          "type": "u8"
+        },
+        {
+          "name": "entry_prices",
+          "type": {
+            "array": [
+              "i64",
+              3
+            ]
+          }
+        },
+        {
+          "name": "exit_prices",
+          "type": {
+            "array": [
+              "i64",
+              3
+            ]
+          }
+        },
+        {
+          "name": "moves",
+          "type": {
+            "vec": {
+              "defined": {
+                "name": "TapeMove"
+              }
+            }
+          }
+        },
+        {
+          "name": "tape_hash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "settle_and_undelegate_er",
+      "docs": [
+        "Marks the final PnL on MagicBlock ER, closes the sprint, and commits + undelegates back to L1."
+      ],
+      "discriminator": [
+        60,
+        159,
+        21,
+        12,
+        44,
+        89,
+        49,
+        204
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "sprint",
+          "writable": true
+        },
+        {
+          "name": "sol_feed"
+        },
+        {
+          "name": "btc_feed"
+        },
+        {
+          "name": "eth_feed"
+        },
+        {
+          "name": "magic_program",
+          "address": "Magic11111111111111111111111111111111111111"
+        },
+        {
+          "name": "magic_context",
+          "writable": true,
+          "address": "MagicContext1111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "start_sprint_er",
+      "docs": [
+        "Starts the 90-second sprint clock on MagicBlock ER using live Pyth Lazer SOL/BTC/ETH feeds."
+      ],
+      "discriminator": [
+        5,
+        215,
+        85,
+        224,
+        46,
+        185,
+        211,
+        69
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "sprint",
+          "writable": true
+        },
+        {
+          "name": "sol_feed"
+        },
+        {
+          "name": "btc_feed"
+        },
+        {
+          "name": "eth_feed"
+        }
+      ],
+      "args": [
+        {
+          "name": "initial_weights",
+          "type": {
+            "array": [
+              "i8",
+              3
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "withdraw",
+      "docs": [
+        "Withdraws available SOL from the player's L1 escrow PlayerVault PDA.",
+        "Strictly requires the primary wallet signer (never callable by a session key)."
+      ],
+      "discriminator": [
+        183,
+        18,
+        70,
+        156,
+        148,
+        109,
+        161,
+        34
+      ],
+      "accounts": [
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "player"
+              }
+            ]
+          }
+        },
+        {
+          "name": "player",
+          "writable": true,
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "amount_lamports",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "ArenaConfig",
+      "discriminator": [
+        9,
+        186,
+        181,
+        145,
+        197,
+        50,
+        33,
+        38
+      ]
+    },
+    {
+      "name": "ArenaTreasury",
+      "discriminator": [
+        69,
+        180,
+        122,
+        250,
+        248,
+        80,
+        177,
+        18
+      ]
+    },
+    {
+      "name": "GhostTape",
+      "discriminator": [
+        63,
+        0,
+        232,
+        183,
+        131,
+        241,
+        69,
+        243
+      ]
+    },
+    {
+      "name": "PlayerVault",
+      "discriminator": [
+        37,
+        59,
+        99,
+        224,
+        234,
+        233,
+        179,
+        185
+      ]
+    },
+    {
+      "name": "SprintRun",
+      "discriminator": [
+        241,
+        241,
+        225,
+        114,
+        197,
+        8,
+        84,
+        245
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "Unauthorized",
+      "msg": "Unauthorized signer for this instruction"
+    },
+    {
+      "code": 6001,
+      "name": "InvalidAmount",
+      "msg": "Invalid deposit or withdraw amount"
+    },
+    {
+      "code": 6002,
+      "name": "InsufficientVaultBalance",
+      "msg": "Insufficient available vault balance"
+    },
+    {
+      "code": 6003,
+      "name": "InvalidStakeAmount",
+      "msg": "Stake amount must be between 0.05 SOL and 1.00 SOL"
+    },
+    {
+      "code": 6004,
+      "name": "GhostNotActive",
+      "msg": "Selected Bounty Ghost is not active"
+    },
+    {
+      "code": 6005,
+      "name": "InvalidAllocationWeights",
+      "msg": "Allocation weights must each be within -100..=100 and sum of absolutes <= 100"
+    },
+    {
+      "code": 6006,
+      "name": "InvalidSprintState",
+      "msg": "Sprint is not in the expected lifecycle state"
+    },
+    {
+      "code": 6007,
+      "name": "SprintExpired",
+      "msg": "Sprint timer has already expired"
+    },
+    {
+      "code": 6008,
+      "name": "VrfNotReady",
+      "msg": "VRF Tactical Cards have not been dealt yet"
+    },
+    {
+      "code": 6009,
+      "name": "VrfAlreadyFulfilled",
+      "msg": "VRF has already been fulfilled for this sprint"
+    },
+    {
+      "code": 6010,
+      "name": "InvalidCardSlot",
+      "msg": "Invalid tactical card slot index"
+    },
+    {
+      "code": 6011,
+      "name": "CardAlreadyUsed",
+      "msg": "Tactical card in this slot has already been used"
+    },
+    {
+      "code": 6012,
+      "name": "InvalidPriceFeed",
+      "msg": "Invalid Pyth Lazer price feed account or owner"
+    },
+    {
+      "code": 6013,
+      "name": "InvalidOraclePrice",
+      "msg": "Oracle price value is invalid or non-positive"
+    },
+    {
+      "code": 6014,
+      "name": "MathOverflow",
+      "msg": "Arithmetic overflow or underflow"
+    },
+    {
+      "code": 6015,
+      "name": "InsufficientTreasuryFunds",
+      "msg": "Arena treasury has insufficient funds to pay winning profit"
+    },
+    {
+      "code": 6016,
+      "name": "NotWinningSprint",
+      "msg": "Only a finalized winning sprint can be published as a Bounty Ghost"
+    },
+    {
+      "code": 6017,
+      "name": "AlreadyPublished",
+      "msg": "This sprint has already been published as a Bounty Ghost"
+    },
+    {
+      "code": 6018,
+      "name": "InvalidCallsign",
+      "msg": "Callsign must be 3 to 20 printable ASCII characters"
+    },
+    {
+      "code": 6019,
+      "name": "NoClaimableBounty",
+      "msg": "No unclaimed defense bounty is available for this Ghost"
+    },
+    {
+      "code": 6020,
+      "name": "RentExemptViolation",
+      "msg": "Vault balance would fall below rent-exempt minimum"
+    }
+  ],
+  "types": [
+    {
+      "name": "ArenaConfig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "total_sprints",
+            "type": "u64"
+          },
+          {
+            "name": "total_ghosts",
+            "type": "u64"
+          },
+          {
+            "name": "total_volume_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ArenaTreasury",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "GhostTape",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "ghost_id",
+            "type": "u64"
+          },
+          {
+            "name": "creator",
+            "type": "pubkey"
+          },
+          {
+            "name": "callsign",
+            "type": {
+              "array": [
+                "u8",
+                20
+              ]
+            }
+          },
+          {
+            "name": "callsign_len",
+            "type": "u8"
+          },
+          {
+            "name": "stake_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "target_return_bps",
+            "type": "i32"
+          },
+          {
+            "name": "regime",
+            "type": "u8"
+          },
+          {
+            "name": "wins",
+            "type": "u32"
+          },
+          {
+            "name": "losses",
+            "type": "u32"
+          },
+          {
+            "name": "bounty_earned_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "unclaimed_bounty_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "entry_prices",
+            "type": {
+              "array": [
+                "i64",
+                3
+              ]
+            }
+          },
+          {
+            "name": "exit_prices",
+            "type": {
+              "array": [
+                "i64",
+                3
+              ]
+            }
+          },
+          {
+            "name": "move_count",
+            "type": "u8"
+          },
+          {
+            "name": "moves",
+            "type": {
+              "array": [
+                {
+                  "defined": {
+                    "name": "TapeMove"
+                  }
+                },
+                16
+              ]
+            }
+          },
+          {
+            "name": "tape_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "source_sprint_id",
+            "type": "u64"
+          },
+          {
+            "name": "active",
+            "type": "bool"
+          },
+          {
+            "name": "created_ts",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PlayerVault",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "available_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "locked_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "total_wins",
+            "type": "u32"
+          },
+          {
+            "name": "total_losses",
+            "type": "u32"
+          },
+          {
+            "name": "sprint_nonce",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SprintRun",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "sprint_id",
+            "type": "u64"
+          },
+          {
+            "name": "player",
+            "type": "pubkey"
+          },
+          {
+            "name": "session_key",
+            "type": "pubkey"
+          },
+          {
+            "name": "ghost_id",
+            "type": "u64"
+          },
+          {
+            "name": "stake_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "status",
+            "type": "u8"
+          },
+          {
+            "name": "start_ts",
+            "type": "i64"
+          },
+          {
+            "name": "end_ts",
+            "type": "i64"
+          },
+          {
+            "name": "last_mark_ts",
+            "type": "i64"
+          },
+          {
+            "name": "settled_ts",
+            "type": "i64"
+          },
+          {
+            "name": "entry_prices",
+            "type": {
+              "array": [
+                "i64",
+                3
+              ]
+            }
+          },
+          {
+            "name": "last_prices",
+            "type": {
+              "array": [
+                "i64",
+                3
+              ]
+            }
+          },
+          {
+            "name": "weights",
+            "type": {
+              "array": [
+                "i8",
+                3
+              ]
+            }
+          },
+          {
+            "name": "pnl_bps",
+            "type": "i32"
+          },
+          {
+            "name": "cards",
+            "type": {
+              "array": [
+                "u8",
+                3
+              ]
+            }
+          },
+          {
+            "name": "cards_used",
+            "type": {
+              "array": [
+                "bool",
+                3
+              ]
+            }
+          },
+          {
+            "name": "active_card",
+            "type": "u8"
+          },
+          {
+            "name": "active_card_until",
+            "type": "i64"
+          },
+          {
+            "name": "vrf_requested",
+            "type": "bool"
+          },
+          {
+            "name": "vrf_fulfilled",
+            "type": "bool"
+          },
+          {
+            "name": "vrf_seed",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "move_count",
+            "type": "u8"
+          },
+          {
+            "name": "moves",
+            "type": {
+              "array": [
+                {
+                  "defined": {
+                    "name": "TapeMove"
+                  }
+                },
+                16
+              ]
+            }
+          },
+          {
+            "name": "published_as_ghost",
+            "type": "bool"
+          },
+          {
+            "name": "challenger_won",
+            "type": "bool"
+          },
+          {
+            "name": "delegated_validator",
+            "type": "pubkey"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TapeMove",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "elapsed_secs",
+            "type": "u16"
+          },
+          {
+            "name": "sol_w",
+            "type": "i8"
+          },
+          {
+            "name": "btc_w",
+            "type": "i8"
+          },
+          {
+            "name": "eth_w",
+            "type": "i8"
+          },
+          {
+            "name": "card_id",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ]
+}
