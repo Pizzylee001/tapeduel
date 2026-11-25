@@ -815,6 +815,7 @@ pub struct CreateSprint<'info> {
 #[delegate]
 #[derive(Accounts)]
 pub struct DelegateSprint<'info> {
+    #[account(mut)]
     pub payer: Signer<'info>,
     /// CHECK: SprintRun PDA initialized in the preceding instruction
     #[account(mut, del)]

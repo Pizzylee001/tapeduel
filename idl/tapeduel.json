@@ -310,6 +310,7 @@
       "accounts": [
         {
           "name": "payer",
+          "writable": true,
           "signer": true
         },
         {
