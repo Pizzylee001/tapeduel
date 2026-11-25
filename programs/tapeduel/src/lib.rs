@@ -16,6 +16,8 @@ pub mod constants;
 pub mod errors;
 pub mod math;
 pub mod state;
+#[cfg(test)]
+mod tests;
 
 use constants::*;
 use errors::TapeDuelError;
