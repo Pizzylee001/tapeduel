@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="TapeDuel">
+  <rect width="64" height="64" fill="#0B1B16"/>
+  <polygon points="4,4 48,4 60,16 60,60 4,60" fill="#F0B429"/>
+  <polygon points="50,4 60,4 60,14" fill="#2DD4BF"/>
+  <path fill="#091511" d="M9.4 21h21v6.2h-7.2V45h-6.6V27.2H9.4V21zm24 0h10.2c6.8 0 11.1 4.4 11.1 12s-4.3 12-11.1 12H33.4V21zm6.5 6v12h3.4c3.1 0 4.8-2.1 4.8-6s-1.7-6-4.8-6h-3.4z"/>
+</svg>
