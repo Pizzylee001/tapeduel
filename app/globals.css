@@ -1,0 +1,240 @@
+@import "tailwindcss";
+
+:root {
+  --color-canvas: #0B1B16;
+  --color-canvas-spotlight: #143027;
+  --color-canvas-deep: #07120E;
+  --color-surface-raised: #122720;
+  --color-surface-elevated: #18332A;
+  --color-surface-inset: #081410;
+  --color-ink-primary: #F3EFE6;
+  --color-ink-secondary: #B6C9C0;
+  --color-ink-muted: #94ADA2;
+  --color-border-subtle: rgba(243, 239, 230, 0.14);
+  --color-border-strong: rgba(243, 239, 230, 0.30);
+  --color-border-gold: rgba(240, 180, 41, 0.55);
+  --color-accent-primary: #F0B429;
+  --color-accent-hover: #F7C64E;
+  --color-on-accent: #091511;
+  --color-semantic-long: #34D399;
+  --color-semantic-long-bg: rgba(52, 211, 153, 0.12);
+  --color-semantic-short: #FB7185;
+  --color-semantic-short-bg: rgba(251, 113, 133, 0.12);
+  --color-semantic-vrf: #2DD4BF;
+  --color-semantic-vrf-bg: rgba(45, 212, 191, 0.12);
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --shadow-card: 0 12px 28px -8px rgba(4, 11, 8, 0.65);
+}
+
+@theme inline {
+  --font-display: var(--font-russo), "Arial Black", sans-serif;
+  --font-sans: var(--font-chakra), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-fira), ui-monospace, SFMono-Regular, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background-color: var(--color-canvas);
+  color: var(--color-ink-primary);
+  font-family: var(--font-chakra), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+/* Layered non-flat paddock desk background per DESIGN.md Section 1 */
+body {
+  background-image:
+    radial-gradient(960px 460px at 68% -12%, rgba(28, 74, 58, 0.58), transparent 70%),
+    radial-gradient(640px 320px at 12% 108%, rgba(240, 180, 41, 0.08), transparent 65%),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(243, 239, 230, 0.018) 0 1px,
+      transparent 1px 10px
+    );
+  background-attachment: fixed;
+}
+
+.font-display {
+  font-family: var(--font-russo), "Arial Black", sans-serif;
+  letter-spacing: 0.01em;
+}
+
+.font-data {
+  font-family: var(--font-fira), ui-monospace, SFMono-Regular, monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* 45-degree chamfered physical pit-pass geometry */
+.chamfer-stage {
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+  box-shadow: var(--shadow-card);
+}
+
+.chamfer-card {
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+}
+
+.chamfer-btn {
+  clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 0 100%);
+  transition: transform 110ms var(--ease-out), background-color 140ms var(--ease-out), border-color 140ms var(--ease-out), color 140ms var(--ease-out);
+}
+
+.chamfer-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+/* Oscilloscope recessed grid strictly inside timing charts */
+.oscilloscope-grid {
+  background-color: var(--color-canvas-deep);
+  background-image:
+    linear-gradient(to right, rgba(243, 239, 230, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(243, 239, 230, 0.04) 1px, transparent 1px);
+  background-size: 11.111% 100%, 100% 25%;
+}
+
+/* Staggered entrance animation */
+@keyframes stageIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-stage-in {
+  animation: stageIn 240ms var(--ease-out) both;
+}
+
+/* Signature Moment 1: 3D VRF Tactical Card Hand */
+.vrf-perspective {
+  perspective: 950px;
+}
+
+.vrf-card-inner {
+  position: relative;
+  width: 100%;
+  min-height: 158px;
+  transform-style: preserve-3d;
+  transition: transform 280ms var(--ease-out);
+}
+
+.vrf-card-inner.is-dealt {
+  transform: rotateY(180deg);
+}
+
+.vrf-card-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.vrf-card-front {
+  transform: rotateY(180deg);
+}
+
+@media (hover: hover) {
+  .vrf-card-lift {
+    transition: transform 150ms var(--ease-out), border-color 150ms var(--ease-out);
+  }
+  .vrf-card-lift:hover:not(:disabled) {
+    transform: translateY(-4px);
+  }
+}
+
+/* Signature Moment 2: Sealed Ghost Unmask sweep */
+.ghost-unmask-wrap {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 450ms var(--ease-in-out);
+}
+
+.ghost-unmask-wrap.is-unmasked {
+  clip-path: inset(0 0 0 0);
+}
+
+/* Focus visible accessibility ring */
+:focus-visible {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: 2px;
+}
+
+/* Range input styling for rapid-fire allocation pad */
+input[type="range"].tapeduel-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  background: var(--color-canvas-deep);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 0;
+}
+
+input[type="range"].tapeduel-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 22px;
+  background: var(--color-accent-primary);
+  border: 1px solid var(--color-on-accent);
+  cursor: pointer;
+}
+
+input[type="range"].tapeduel-slider::-moz-range-thumb {
+  width: 16px;
+  height: 22px;
+  border-radius: 0;
+  background: var(--color-accent-primary);
+  border: 1px solid var(--color-on-accent);
+  cursor: pointer;
+}
+
+/* Override Solana Wallet Adapter modal to match Racing Forest + Gold theme */
+.wallet-adapter-modal-wrapper {
+  background: var(--color-surface-raised) !important;
+  border: 1px solid var(--color-border-strong) !important;
+  border-radius: 0 !important;
+  font-family: var(--font-chakra), sans-serif !important;
+  color: var(--color-ink-primary) !important;
+}
+
+.wallet-adapter-modal-button-close {
+  background: var(--color-surface-inset) !important;
+  border-radius: 0 !important;
+}
+
+.wallet-adapter-modal-list .wallet-adapter-button {
+  border-radius: 0 !important;
+  font-family: var(--font-chakra), sans-serif !important;
+}
+
+.wallet-adapter-modal-list .wallet-adapter-button:hover {
+  background: var(--color-surface-elevated) !important;
+}
+
+/* Reduced motion fallback per DESIGN.md Section 9 */
+@media (prefers-reduced-motion: reduce) {
+  .animate-stage-in {
+    animation: none;
+  }
+  .vrf-card-inner {
+    transition: opacity 120ms linear;
+  }
+  .vrf-card-lift:hover:not(:disabled) {
+    transform: none;
+  }
+  .ghost-unmask-wrap {
+    transition: opacity 120ms linear;
+  }
+}
