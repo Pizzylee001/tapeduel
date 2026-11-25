@@ -27,6 +27,20 @@ Built for **MagicBlock Solana Blitz V10: Entertainment Finance**.
 | `BTC/USD` Live ER Feed | `71wtTRDY8Gxgw56bXFt2oc6qeAbTxzStdNiC425Z51sr` |
 | `ETH/USD` Live ER Feed | `5vaYr1hpv8yrSpu8w3K95x22byYxUJCCNCSYJtqVWPvG` |
 
+### Verified Live Devnet & MagicBlock ER Proofs
+
+- **Deployed Program:** [BdVNbT73iebJ3w396FeWiu3cvcQbe4fG1EZ138d1QpXi](https://explorer.solana.com/address/BdVNbT73iebJ3w396FeWiu3cvcQbe4fG1EZ138d1QpXi?cluster=devnet)
+- **Seeded Bounty Ghosts (Devnet PDAs):**
+  - `SOL-SURGE-04`: [AeLuHnNmpbmxW4rtr3hKiagRWVJEJCbwutyBRjoxSjKX](https://explorer.solana.com/address/AeLuHnNmpbmxW4rtr3hKiagRWVJEJCbwutyBRjoxSjKX?cluster=devnet)
+  - `DELTA-HEDGE-11`: [8Sa3gdoQHyRB4MKEXpmnnyxLaQdh2jBBzKjK8T7ycoLN](https://explorer.solana.com/address/8Sa3gdoQHyRB4MKEXpmnnyxLaQdh2jBBzKjK8T7ycoLN?cluster=devnet)
+  - `WHIPSAW-09`: [7xNHZYZ8634QzY2zuDPUNFvUGLjgeQVRV59JE3Kx1ctw](https://explorer.solana.com/address/7xNHZYZ8634QzY2zuDPUNFvUGLjgeQVRV59JE3Kx1ctw?cluster=devnet)
+- **Single-Tx Create + Delegate Sprint (Devnet L1):** [3kcb2sQ...rW4B6T](https://explorer.solana.com/tx/3kcb2sQ1njxGhHU921p3FkPJbunsNQMv6vgvXEGJsih8NcaA16PJiNzeQFQyt8HQPc5u5MBkHZ11Eo88osrW4B6T?cluster=devnet)
+- **MagicBlock ER VRF Request (`Cards dealt: [1, 2, 2]`):** [4dRuR25...emXZXte](https://explorer.solana.com/tx/4dRuR25ovdJ4m9H5py9Z2ZasaNfZk2wYzf7hvh3aa1tYndcPMfnbzRKPpbY6G3yRxp4Bcg95tdTrmGXFLemXZXte?cluster=custom&customUrl=https%3A%2F%2Fdevnet-eu.magicblock.app)
+- **Gasless ER Rebalance (Pyth Lazer Live Mark):** [4FoG4sf...WmWcq984](https://explorer.solana.com/tx/4FoG4sfqsCS1xiUijneDYxTMCeZ318LwNjXas4pbjaUhj7V697kSE7Fok2k9zi7UPfWx5gikEh3q3gssWmWcq984?cluster=custom&customUrl=https%3A%2F%2Fdevnet-eu.magicblock.app)
+- **Gasless ER Tactical Card Activation (`2x Boost`):** [2Vd22gN...FPsArLsK](https://explorer.solana.com/tx/2Vd22gN2SqrPGUNAJ7p4MAp2C7ezUFkLUTdgnn1HvEzFPnKiaZWA8kUP3agygsyoxDXYAaGznpdBgjMMFPsArLsK?cluster=custom&customUrl=https%3A%2F%2Fdevnet-eu.magicblock.app)
+- **ER Settle + Commit & Undelegate (`+4 bps`):** [46f7hzw...JEuAY96T](https://explorer.solana.com/tx/46f7hzwKyu3jysA3DyCzsBL16Z64RiiNU5hpNPTNVj62JPShJmPDbGU2K3eQRbJukqQRwPQbpUggxJTqJEuAY96T?cluster=custom&customUrl=https%3A%2F%2Fdevnet-eu.magicblock.app)
+- **Solana Devnet L1 Finalize Payout:** [43sSMKp...GPdSFNj](https://explorer.solana.com/tx/43sSMKpjdZFUywTUFMBZgBGsvYxagkuvB7jSbACbX3TuSmq4GVTG6Zpr3KReg2G4TYdRzBrp98BAH3E8GPdSFNj?cluster=devnet)
+
 ### Program Security & Solvency Rules
 
 - **Scoped Session Keys**: Each sprint generates an ephemeral browser Ed25519 keypair stored in `sessionStorage`. The Anchor program allows that key to sign only ER gameplay instructions (`request_vrf_cards`, `start_sprint_er`, `rebalance_er`, `activate_card_er`, `settle_and_undelegate_er`). L1 escrow `withdraw` and `claim_bounty` strictly require the primary wallet signer.
