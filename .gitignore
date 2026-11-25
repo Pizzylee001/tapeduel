@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Next.js / Vercel
+.next/
+out/
+.vercel/
+
+# Anchor / Rust / Solana
+target/
+.anchor/
+test-ledger/
+**/*.rs.bk
+
+# Secrets, environment files, and keypairs (NEVER commit)
+.env
+.env.*
+!.env.example
+.keys/
+*-keypair.json
+id.json
+*.pem
+*.key
+
+# Logs and OS files
+*.log
+npm-debug.log*
+pnpm-debug.log*
+.DS_Store
+Thumbs.db
