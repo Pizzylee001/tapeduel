@@ -1,10 +1,13 @@
 # TapeDuel
 
+[![Live App](https://img.shields.io/badge/Live%20App-tapeduel.vercel.app-F0B429?style=flat-square&logo=vercel&logoColor=black)](https://tapeduel.vercel.app/)
 [![Solana Devnet](https://img.shields.io/badge/Solana-Devnet%20Live-34D399?style=flat-square&logo=solana&logoColor=white)](https://explorer.solana.com/address/BdVNbT73iebJ3w396FeWiu3cvcQbe4fG1EZ138d1QpXi?cluster=devnet)
 [![MagicBlock ER](https://img.shields.io/badge/MagicBlock-Ephemeral%20Rollups%200.20-2DD4BF?style=flat-square)](https://docs.magicblock.gg)
 [![Anchor](https://img.shields.io/badge/Anchor-1.2.2-F0B429?style=flat-square)](https://www.anchor-lang.com/)
 [![Next.js](https://img.shields.io/badge/Next.js-16%20App%20Router-0B1B16?style=flat-square&logo=next.js&logoColor=white)](https://nextjs.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-F3EFE6?style=flat-square)](./LICENSE)
+
+**Live Demo:** [https://tapeduel.vercel.app/](https://tapeduel.vercel.app/)
 
 **TapeDuel** is an asynchronous 90-second live market portfolio duel on Solana Devnet and MagicBlock Ephemeral Rollups (ER), built for **MagicBlock Solana Blitz V10: Entertainment Finance**.
 
